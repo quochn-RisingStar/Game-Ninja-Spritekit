@@ -15,6 +15,10 @@
 		545BE61F2BBE42C000DDD4FF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 545BE61D2BBE42C000DDD4FF /* Main.storyboard */; };
 		545BE6212BBE42C100DDD4FF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 545BE6202BBE42C100DDD4FF /* Assets.xcassets */; };
 		545BE6242BBE42C100DDD4FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 545BE6222BBE42C100DDD4FF /* LaunchScreen.storyboard */; };
+		548B8FD02BBFAC2000118CFC /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548B8FCF2BBFAC2000118CFC /* MainMenu.swift */; };
+		548B8FD22BBFB9CD00118CFC /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548B8FD12BBFB9CD00118CFC /* GameOverScene.swift */; };
+		846A93B12BC262B80074FAF9 /* Sound in Resources */ = {isa = PBXBuildFile; fileRef = 846A93AF2BC262B80074FAF9 /* Sound */; };
+		846A93B22BC262B80074FAF9 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = 846A93B02BC262B80074FAF9 /* Fonts */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +31,11 @@
 		545BE61E2BBE42C000DDD4FF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		545BE6202BBE42C100DDD4FF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		545BE6232BBE42C100DDD4FF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		547B09D52BBEA26200068A96 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		548B8FCF2BBFAC2000118CFC /* MainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
+		548B8FD12BBFB9CD00118CFC /* GameOverScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
+		846A93AF2BC262B80074FAF9 /* Sound */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Sound; path = "../../../../Downloads/ninja-resources-master/Sound"; sourceTree = "<group>"; };
+		846A93B02BC262B80074FAF9 /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Fonts; path = "../../../../Downloads/ninja-resources-master/Fonts"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,16 +68,45 @@
 		545BE6122BBE42C000DDD4FF /* Game */ = {
 			isa = PBXGroup;
 			children = (
+				846A93B02BC262B80074FAF9 /* Fonts */,
+				846A93AF2BC262B80074FAF9 /* Sound */,
+				547B09D52BBEA26200068A96 /* Info.plist */,
 				545BE6132BBE42C000DDD4FF /* AppDelegate.swift */,
 				545BE6152BBE42C000DDD4FF /* GameScene.sks */,
 				545BE6172BBE42C000DDD4FF /* Actions.sks */,
-				545BE6192BBE42C000DDD4FF /* GameScene.swift */,
-				545BE61B2BBE42C000DDD4FF /* GameViewController.swift */,
+				545BE6382BBE58F400DDD4FF /* Scenes */,
+				545BE6372BBE58E900DDD4FF /* Controllers */,
+				545BE6362BBE589600DDD4FF /* Resource */,
+			);
+			path = Game;
+			sourceTree = "<group>";
+		};
+		545BE6362BBE589600DDD4FF /* Resource */ = {
+			isa = PBXGroup;
+			children = (
 				545BE61D2BBE42C000DDD4FF /* Main.storyboard */,
 				545BE6202BBE42C100DDD4FF /* Assets.xcassets */,
 				545BE6222BBE42C100DDD4FF /* LaunchScreen.storyboard */,
 			);
-			path = Game;
+			path = Resource;
+			sourceTree = "<group>";
+		};
+		545BE6372BBE58E900DDD4FF /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				545BE61B2BBE42C000DDD4FF /* GameViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		545BE6382BBE58F400DDD4FF /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				545BE6192BBE42C000DDD4FF /* GameScene.swift */,
+				548B8FCF2BBFAC2000118CFC /* MainMenu.swift */,
+				548B8FD12BBFB9CD00118CFC /* GameOverScene.swift */,
+			);
+			path = Scenes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -129,8 +167,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				846A93B12BC262B80074FAF9 /* Sound in Resources */,
 				545BE61F2BBE42C000DDD4FF /* Main.storyboard in Resources */,
 				545BE6162BBE42C000DDD4FF /* GameScene.sks in Resources */,
+				846A93B22BC262B80074FAF9 /* Fonts in Resources */,
 				545BE6212BBE42C100DDD4FF /* Assets.xcassets in Resources */,
 				545BE6242BBE42C100DDD4FF /* LaunchScreen.storyboard in Resources */,
 				545BE6182BBE42C000DDD4FF /* Actions.sks in Resources */,
@@ -144,9 +184,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				548B8FD22BBFB9CD00118CFC /* GameOverScene.swift in Sources */,
 				545BE61A2BBE42C000DDD4FF /* GameScene.swift in Sources */,
 				545BE61C2BBE42C000DDD4FF /* GameViewController.swift in Sources */,
 				545BE6142BBE42C000DDD4FF /* AppDelegate.swift in Sources */,
+				548B8FD02BBFAC2000118CFC /* MainMenu.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -296,16 +338,19 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 4V38K74UPM;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Game/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -313,6 +358,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.quochn.swift.Game;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -324,16 +370,19 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 4V38K74UPM;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Game/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -341,6 +390,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.quochn.swift.Game;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
