@@ -32,6 +32,9 @@ class GameScene: SKScene {
     var lifeNodes: [SKSpriteNode] = []
     var scoreLbl = SKLabelNode(fontNamed: "Krungthep")
     var coinIcon: SKSpriteNode!
+    var soundCoin = SKAction.playSoundFileName("coin.mp3")
+    var soundJump = SKAction.playSoundFileName("jump.wav")
+    var soundCollision = SKAction.playSoundFileName("collision.wav")
 
     var playableRect: CGRect {
         let ratio: CGFloat
@@ -53,6 +56,7 @@ class GameScene: SKScene {
 
     override func didMove(to view: SKView) {
         setupNodes()
+        SKTAudio.shared().playMusic("backgroundMusic.mp3")
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -69,12 +73,15 @@ class GameScene: SKScene {
             containerNode.removeFromParent()
             isPaused = false
         } else if node.name == "Quit" {
-//            presentScene(Ma)
+            let scene =  MainMenu(size: size)
+            scene.scaleMode = scaleMode
+            view!.presentScene(scene, transition: .doorsCloseVertical(withDuration: 0.8))
         } else {
             if !isPaused {
                 if onGround {
                     onGround = false
                     velocityY = -25.0
+                    run(soundJump)
                 }
             }
         }
@@ -192,7 +199,7 @@ extension GameScene {
     
         let quit = SKSpriteNode(imageNamed: "back")
         quit.zPosition = 70.0
-        quit.name = "Back"
+        quit.name = "Quit"
         quit.setScale(0.7)
         quit.position = CGPoint(x: -panel.frame.width/2 + quit.frame.width * 1.5, y: 0.0)
         panel.addChild(quit)
@@ -387,6 +394,7 @@ extension GameScene: SKPhysicsContactDelegate{
             numberScore -= 1
             if numberScore <= 0 { numberScore = 0 }
             scoreLbl.text = "\(numberScore)"
+            run(soundCollision)
         case PhysicsCategory.Obstacle:
             setupGameOver()
         case PhysicsCategory.Coin:
@@ -402,6 +410,7 @@ extension GameScene: SKPhysicsContactDelegate{
                     ScoreGenerator.shared.setHightScore(hightScore)
                     ScoreGenerator.shared.setScore(numberScore)
                 }
+                run(soundCoin)
             }
         default:
             break

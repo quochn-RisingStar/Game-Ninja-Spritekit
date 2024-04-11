@@ -17,7 +17,7 @@ class GameOverScene: SKScene {
         createBG()
         createGround()
         createGameOver()
-        run(.sequence([.wait(forDuration: 5.0),
+        run(.sequence([.wait(forDuration: 3.3),
                        .run {
                            let scene = MainMenu(size: self.size)
                            scene.scaleMode = self.scaleMode
@@ -80,13 +80,13 @@ extension GameOverScene {
     func createGameOver() {
         let gameOver = SKSpriteNode(imageNamed: "gameOver")
         gameOver.name = "GameOver"
-        gameOver.setScale(0.75)
-        gameOver.position = CGPoint(x: size.width/2, y: size.height/2 + gameOver.frame.height/2)
         gameOver.zPosition = 10
+        gameOver.position = CGPoint(x: size.width/2, y: size.height/2 + gameOver.frame.height/2)
         addChild(gameOver)
-        let min = SKAction.scale(by: 1.1, duration: 0.5)
-        let max = SKAction.scale(by: 1.0, duration: 0.5)
-        let fullScale = SKAction.sequence([min, max])
+        gameOver.setScale(0.7)
+        let min = SKAction.scale(to: 1.1, duration: 0.3)
+        let max = SKAction.scale(to: 0.7, duration: 0.3)
+        let fullScale = SKAction.sequence([max, min])
         gameOver.run(.repeatForever(fullScale))
     }
 }
