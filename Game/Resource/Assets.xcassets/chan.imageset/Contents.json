@@ -1,11 +1,11 @@
 {
   "images" : [
     {
+      "filename" : "chang.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "chan.png",
       "idiom" : "universal",
       "scale" : "2x"
     },

@@ -11,6 +11,7 @@ import GameplayKit
 class GameScene: SKScene {
     var ground: SKSpriteNode!
     var player: SKSpriteNode!
+    var wheel: SKSpriteNode!
     var cameraNode = SKCameraNode()
     var objects: [SKSpriteNode] = []
     var coin: SKSpriteNode!
@@ -56,7 +57,7 @@ class GameScene: SKScene {
 
     override func didMove(to view: SKView) {
         setupNodes()
-        SKTAudio.shared().playMusic("backgroundMusic.mp3")
+        SKTAudio.shared().playMusic("bgmusic.mp3")
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -118,7 +119,7 @@ class GameScene: SKScene {
     }
 }
 
-extension GameScene {
+private extension GameScene {
     func setupNodes() {
         createBG()
         createGround()
@@ -158,7 +159,7 @@ extension GameScene {
             ground.name = "Ground"
             ground.anchorPoint = .zero
             ground.zPosition = 1.0
-            ground.position = CGPoint(x: CGFloat(i)*ground.frame.width, y: 0.0)
+            ground.position = CGPoint(x: -CGFloat(i)*ground.frame.width, y: AppDelegate.shared.isX ? 100.0 : 0.0)
             ground.physicsBody = SKPhysicsBody(rectangleOf: ground.size)
             ground.physicsBody?.isDynamic = false
             ground.physicsBody?.affectedByGravity = false
@@ -169,10 +170,13 @@ extension GameScene {
 
     func createPlayer() {
         player = SKSpriteNode(imageNamed: "ninja")
+        wheel = SKSpriteNode(imageNamed: "chan")
+        wheel.name = "chan"
+        wheel.zPosition = 10.0
         player.name = "Player"
         player.zPosition = 5.0
         player.position = CGPoint(x: frame.width/2 - 100,
-                                  y: ground.frame.height + player.frame.height/2.0)
+                                  y: ground.frame.maxY + player.frame.height/2.0)
         player.physicsBody = SKPhysicsBody(rectangleOf: player.size)
         player.physicsBody?.restitution = 0.0
         player.physicsBody?.affectedByGravity = false
@@ -180,6 +184,14 @@ extension GameScene {
         player.physicsBody?.categoryBitMask = PhysicsCategory.Player
         player.physicsBody?.contactTestBitMask = PhysicsCategory.Block | PhysicsCategory.Coin | PhysicsCategory.Obstacle
         playerPosY = player.position.y
+        if AppDelegate.shared.isX {
+            wheel.position = CGPoint(x: -10, y: player.position.y - 2*(player.frame.minY) + wheel.frame.height)
+        }
+        else {
+            wheel.position = CGPoint(x: -10, y: player.position.y - 2*(player.frame.height) + wheel.frame.height/2)
+        }
+        
+        player.addChild(wheel)
         addChild(player)
     }
 
@@ -224,14 +236,17 @@ extension GameScene {
 
     func movePlayer() {
         let amountToMove = cameraMovePointPerSecond * CGFloat(dt)
+        let rotate = CGFloat(1).degreesToRadians() * amountToMove/3
         if !onGround {
-            let rotate = CGFloat(1).degreesToRadians() * amountToMove/3
             player.zRotation -= rotate
+            wheel.zRotation = 0.0
         } else {
             player.zRotation = 0.0
+            wheel.zRotation -= rotate*5
         }
         player.position.x += amountToMove
     }
+
     func setupObs() {
         for i in 1...3 {
             let sprite = SKSpriteNode(imageNamed: "block-\(i)")
@@ -248,7 +263,7 @@ extension GameScene {
         sprite.zPosition = 5.0
         sprite.setScale(0.85)
         sprite.position = CGPoint(x: cameraRect.maxX + sprite.frame.width/2.0,
-                                  y: ground.frame.height + sprite.frame.height/2.0)
+                                  y: ground.frame.maxY + sprite.frame.height/2.0)
         sprite.physicsBody = SKPhysicsBody(rectangleOf: sprite.size)
         sprite.physicsBody?.isDynamic = false
         sprite.physicsBody?.affectedByGravity = false
@@ -350,6 +365,7 @@ extension GameScene {
         }
         coin.run(.repeatForever(.animate(with: textures, timePerFrame: 0.07)))
     }
+
     func spawnCoin() {
         let radom = CGFloat.random(min: 2.5, max: 5.5)
         run(.repeatForever(.sequence([.wait(forDuration: TimeInterval(radom)), .run {
@@ -415,88 +431,5 @@ extension GameScene: SKPhysicsContactDelegate{
         default:
             break
         }
-    }
-}
-
-
-import CoreGraphics
-
-func + (left: CGPoint, right: CGPoint) -> CGPoint {
-    return CGPoint(x: left.x + right.x, y: left.y + right.y)
-}
-func += (left: inout CGPoint, right: CGPoint) {
-    left = left + right
-}
-
-func - (left: CGPoint, right: CGPoint) -> CGPoint {
-    return CGPoint(x: left.x - right.x, y: left.y - right.y)
-}
-
-func -= (left: inout CGPoint, right: CGPoint) {
-    left = left - right
-}
-
-func * (point: CGPoint, scalar: CGPoint) -> CGPoint {
-    return CGPoint(x: point.x * scalar.x, y: point.y * scalar.y)
-}
-
-func *= (point: inout CGPoint, scalar: CGPoint) {
-    point = point * scalar
-}
-
-func / (point: CGPoint, scalar: CGPoint) -> CGPoint {
-    return CGPoint(x: point.x / scalar.x, y: point.y / scalar.y)
-}
-
-func /= (point: inout CGPoint, scalar: CGPoint) {
-    point = point / scalar
-}
-
-extension CGFloat {
-    func radiansToDegrees() -> CGFloat {
-        return self * 180.0 * CGFloat.pi
-    }
-
-    func degreesToRadians() -> CGFloat {
-        return self *  CGFloat.pi/180.0
-    }
-    static func random() -> CGFloat {
-        return CGFloat(Float(arc4random()) / Float(0xFFFFFFFF))
-    }
-
-    static func random(min: CGFloat, max: CGFloat) -> CGFloat {
-        assert(min < max)
-        return CGFloat.random() * (max - min) + min
-    }
-}
-
-struct PhysicsCategory {
-    static let Player: UInt32 = 0b1
-    static let Block: UInt32 = 0b10
-    static let Obstacle: UInt32 = 0b100
-    static let Ground: UInt32 = 0b1000
-    static let Coin: UInt32 = 0b10000
-}
-
-class ScoreGenerator {
-    static let shared = ScoreGenerator()
-    static let keyHeightScore = "keyHeightScore"
-    static let keyScore = "keyScore"
-    private init() {}
-
-    func setScore(_ score: Int) {
-        UserDefaults.standard.set(score, forKey: ScoreGenerator.keyScore)
-    }
-
-    func getScore(_ score: Int) -> Int {
-        UserDefaults.standard.integer(forKey: ScoreGenerator.keyScore)
-    }
-
-    func setHightScore(_ score: Int) {
-        UserDefaults.standard.set(score, forKey: ScoreGenerator.keyHeightScore)
-    }
-
-    func getHightScore() -> Int {
-        UserDefaults.standard.integer(forKey: ScoreGenerator.keyScore)
     }
 }

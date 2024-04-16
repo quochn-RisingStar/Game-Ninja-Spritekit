@@ -53,8 +53,7 @@ class MainMenu: SKScene {
     }
 }
 
-extension MainMenu {
-
+private extension MainMenu {
     func moveGround() {
         for node in groundNodes {
             node.position.x -= 5
@@ -81,7 +80,7 @@ extension MainMenu {
             ground.name = "Ground"
             ground.anchorPoint = .zero
             ground.zPosition = 1.0
-            ground.position = CGPoint(x: CGFloat(i) * ground.size.width, y: 0.0)
+            ground.position = CGPoint(x: -CGFloat(i)*ground.frame.width, y: AppDelegate.shared.isX ? 100.0 : 0.0)
             ground.physicsBody = SKPhysicsBody(rectangleOf: ground.size)
             ground.physicsBody?.isDynamic = false
             ground.physicsBody?.affectedByGravity = false

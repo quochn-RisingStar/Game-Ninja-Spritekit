@@ -46,25 +46,24 @@ class SKTAudio {
 
     func playMusic(_ fileName: String) {
         if !SKTAudio.musicEnable { return }
-        guard let url = Bundle.main.url(forResource: fileName, withExtension: nil) else { return }
-        
-        do {
-            bgMusic = try AVAudioPlayer(contentsOf: url)
-        } catch let error as NSError {
-            print("💧💧💧💧💧💧" + error.localizedDescription)
-            bgMusic = nil
-        }
-
-        if let bgMusic {
-            bgMusic.numberOfLoops = -1
-            bgMusic.prepareToPlay()
-            bgMusic.play()
+        DispatchQueue.global().async { [weak self] in
+            guard let url = Bundle.main.url(forResource: fileName, withExtension: nil), let self else { return }
+            do {
+                self.bgMusic = try AVAudioPlayer(contentsOf: url)
+            } catch let error as NSError {
+                print("💧💧💧💧💧💧" + error.localizedDescription)
+                bgMusic = nil
+            }
+            if let bgMusic {
+                bgMusic.numberOfLoops = -1
+                bgMusic.prepareToPlay()
+                bgMusic.play()
+            }
         }
     }
 
     func playSoundEffect(_ fileName: String) {
         guard let url = Bundle.main.url(forResource: fileName, withExtension: nil) else { return }
-        
         do {
             soundEffect = try AVAudioPlayer(contentsOf: url)
         } catch let error as NSError {

@@ -9,7 +9,6 @@ import SpriteKit
 
 class GameOverScene: SKScene {
     var ground: SKSpriteNode!
-
     var containerNode: SKSpriteNode!
 
     override func didMove(to view: SKView) {
@@ -31,8 +30,7 @@ class GameOverScene: SKScene {
     }
 }
 
-extension GameOverScene {
-
+private extension GameOverScene {
     func createBG() {
         for i in 0...2 {
             let bg = SKSpriteNode(imageNamed: "background")
@@ -50,7 +48,7 @@ extension GameOverScene {
             ground.name = "Ground"
             ground.anchorPoint = .zero
             ground.zPosition = 1.0
-            ground.position = CGPoint(x: CGFloat(i) * ground.size.width, y: 0.0)
+            ground.position = CGPoint(x: -CGFloat(i)*ground.frame.width, y: AppDelegate.shared.isX ? 100.0 : 0.0)
             ground.physicsBody = SKPhysicsBody(rectangleOf: ground.size)
             ground.physicsBody?.isDynamic = false
             ground.physicsBody?.affectedByGravity = false
